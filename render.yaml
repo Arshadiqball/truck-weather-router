@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: truck-weather-router
+    runtime: python
+    plan: free
+    buildCommand: ./build.sh
+    # one worker: the route/forecast cache and rate limits live in process memory
+    startCommand: cd backend && gunicorn config.wsgi --workers 1 --threads 8 --timeout 120
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
