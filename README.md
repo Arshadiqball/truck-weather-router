@@ -119,7 +119,8 @@ The routes come back first; the heatmap is a second request so the map is usable
 - The grid is drawn to a small canvas that MapLibre stretches over the corridor as a raster
   layer. Each frame is interpolated between grid cells and between hours, which is what makes
   playback smooth.
-- Route and forecast responses are cached in memory for 10–15 minutes.
+- Route and forecast responses are cached in memory for 10–15 minutes (per instance, so on
+  serverless hosting the cache only helps while a function stays warm).
 
 ## Third-party services
 
@@ -164,9 +165,13 @@ python manage.py test
 
 ## Deployment
 
-The app deploys as a single service: `build.sh` installs the API and builds the React bundle, and
-Django serves the bundle with WhiteNoise next to the API. `render.yaml` is a Render blueprint for
-this. Set `DJANGO_DEBUG=0` and a `DJANGO_SECRET_KEY`, and add the hostname to
+The hosted version runs on Vercel. `vercel.json` builds the React bundle and serves it as static
+files, and `api/index.py` exposes the Django app as one serverless function that handles
+everything under `/api/`. Set `DJANGO_SECRET_KEY` in the project's environment variables.
+
+It also runs as a single long-lived service: `build.sh` installs the API and builds the bundle,
+and Django serves the bundle with WhiteNoise next to the API (`render.yaml` is a Render blueprint
+for this). Set `DJANGO_DEBUG=0` and a `DJANGO_SECRET_KEY`, and add the hostname to
 `DJANGO_ALLOWED_HOSTS` if you are not on Render.
 
 ## What I'd do next
