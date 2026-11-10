@@ -1,5 +1,4 @@
-Django>=5.2,<5.3
-djangorestframework>=3.16,<3.17
-requests>=2.32
-whitenoise>=6.8
+# The API's dependencies live in the root requirements.txt, which is where
+# Vercel looks for them. gunicorn is only needed when running as a server.
+-r ../requirements.txt
 gunicorn>=23.0

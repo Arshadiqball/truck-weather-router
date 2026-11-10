@@ -1,16 +1,20 @@
 import os
+import secrets
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIST = BASE_DIR.parent / "frontend" / "dist"
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-not-a-secret")
 # Vercel sets VERCEL=1 in its build and runtime environments.
 ON_VERCEL = bool(os.environ.get("VERCEL"))
 DEBUG = os.environ.get("DJANGO_DEBUG", "0" if ON_VERCEL else "1") == "1"
+
+# Nothing in this app is signed or stored (no sessions, no auth), so when no
+# key is configured outside of local development a throwaway one is fine.
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY") or (
+    "dev-only-not-a-secret" if DEBUG else secrets.token_urlsafe(50)
+)
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
-if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
-    ALLOWED_HOSTS.append(os.environ["RENDER_EXTERNAL_HOSTNAME"])
 if ON_VERCEL:
     ALLOWED_HOSTS.append(".vercel.app")
 

@@ -1,1 +1,4 @@
--r backend/requirements.txt
+Django>=5.2,<5.3
+djangorestframework>=3.16,<3.17
+requests>=2.32
+whitenoise>=6.8

@@ -12,3 +12,8 @@ frontend/dist/
 .env.local
 .DS_Store
 .claude/
+
+# vercel
+.vercel/
+.vercel
+.env*

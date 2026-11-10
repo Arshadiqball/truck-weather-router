@@ -5,7 +5,7 @@ route options, checks the forecast at every checkpoint for the time the truck wi
 there, scores each stretch against the wind / rain / snow rules (including the load rules), and
 recommends a route.
 
-- **Live app:** _add link_
+- **Live app:** https://truck-weather-router-eight.vercel.app
 - **Walkthrough video:** _add link_
 
 ## What it does
@@ -167,12 +167,12 @@ python manage.py test
 
 The hosted version runs on Vercel. `vercel.json` builds the React bundle and serves it as static
 files, and `api/index.py` exposes the Django app as one serverless function that handles
-everything under `/api/`. Set `DJANGO_SECRET_KEY` in the project's environment variables.
+everything under `/api/`. No environment variables are required.
 
 It also runs as a single long-lived service: `build.sh` installs the API and builds the bundle,
-and Django serves the bundle with WhiteNoise next to the API (`render.yaml` is a Render blueprint
-for this). Set `DJANGO_DEBUG=0` and a `DJANGO_SECRET_KEY`, and add the hostname to
-`DJANGO_ALLOWED_HOSTS` if you are not on Render.
+and Django serves the bundle with WhiteNoise next to the API. Start it with
+`cd backend && gunicorn config.wsgi --workers 1 --threads 8`, set `DJANGO_DEBUG=0` and a
+`DJANGO_SECRET_KEY`, and add the hostname to `DJANGO_ALLOWED_HOSTS`.
 
 ## What I'd do next
 
