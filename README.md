@@ -6,7 +6,7 @@ there, scores each stretch against the wind / rain / snow rules (including the l
 recommends a route.
 
 - **Live app:** https://truck-weather-router-eight.vercel.app
-- **Walkthrough video:** _add link_
+- **Walkthrough video:** https://www.loom.com/share/7ed43efc61ab4f5b9fc7b1f0cc08622a
 
 ## What it does
 
